@@ -1,5 +1,5 @@
 import userStorage from "../storage/usersStorage.js";
-import { body, validationResult } from "express-validator";
+import { query, body, validationResult } from "express-validator";
 
 export function usersListGet(req, res) {
     res.render('index', {
@@ -27,7 +27,7 @@ export function usersUpdateGet(req, res) {
 const alphaErr = "Must only Contain Letters!";
 const lengthErr = "Must be Between 1 and 10!";
 
-const validateUser = [
+const validateCreateUser = [
     body("firstName").trim()
         .exists()
         .notEmpty()
@@ -46,11 +46,17 @@ const validateUser = [
         .isAlphanumeric().withMessage("Age must be a number"),
     body("bio")
         .exists()
-        .isLength({max:200}).withMessage("Bio too long")
+        .isLength({max:200}).withMessage("Bio too long"),
 ];
 
+const validateSearchUser = [
+    query("search").notEmpty().withMessage("Input is empty!")
+        .exists().withMessage("Must fill the input!")
+        .isLength({min: 1}).withMessage("Input more characters")
+]
+
 export const usersCreatePost = [
-    validateUser, (req, res) => {
+    validateCreateUser, (req, res) => {
         const errors = validationResult(req);
         
         if(!errors.isEmpty()) {
@@ -66,7 +72,7 @@ export const usersCreatePost = [
 ]
 
 export const usersUpdatePost = [
-    validateUser, (req, res) => {
+    validateCreateUser, (req, res) => {
         const user = userStorage.getAllUsers(req.params.id);
         const errors = validationResult(req);
         
@@ -88,26 +94,29 @@ export function deleteUser(req, res) {
     res.redirect('/');
 }
 
-export function searchUser(req, res) {
-    const allUsers = userStorage.getUsers();
-    const query = req.query.search;
-    const userFound = []
-    let title;
-    
-    allUsers.some((user) => {
-        if(query == user.firstName || query === user.lastName) {
-            userFound.push(user);
-            res.render('search', {users: userFound});
+export const searchUser = [
+    validateSearchUser, (req, res) => {
+        const allUsers = userStorage.getUsers();
+        const query = req.query.search;
+        const userFound = []
+        const errors = validationResult(req)
+
+        if(!errors.isEmpty()) {
+            return res.status(400).render("index", {
+                title: "User List",
+                users: allUsers,
+                errors: errors.array(),
+            });
+        } else if(allUsers) {
+            allUsers.some((user) => {
+                if(!query || query.trim() === "+" || query.trim().length === 0) return;
+                if(query == user.firstName.toLowerCase() || query === user.lastName.toLowerCase()) {
+                    userFound.push(user);
+                    res.render('search', {users: userFound});
+                }
+            })
         } else {
-            setTimeout(() => {
-                res.redirect('/');
-            }, 3000);
             res.render("partials/notFound");
         }
-
-        res.render("search");
-    })
-
-    console.log(allUsers, query);
-    
-} 
+    }
+]
