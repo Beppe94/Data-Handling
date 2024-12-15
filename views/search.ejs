@@ -6,11 +6,24 @@
     <title>Users</title>
 </head>
 <body>
+    <div>
+        <button>
+            <a href="/">Home</a>
+        </button>
+    </div>
     <div class="userFoundCard">
         <% users.forEach((user) => { %>
+            <h1>Name</h1>
             <p><%=user.firstName%></p>
             <p><%=user.lastName%></p>
+            <h1>Age</h1>
+            <p><%=user.age%></p>
+            <h1>Email</h1>
+            <p><%=user.email%></p>
+            <h1>Bio</h1>
+            <p><%=user.bio%></p>
         <%})%>
     </div>
+    
 </body>
 </html>

@@ -108,19 +108,23 @@ export const searchUser = [
                 errors: errors.array()
             })
         }
-        
-        if(allUsers.length > 0) {
-            console.log(true);
-            
-            allUsers.some((user) => {
-                if(query == user.firstName.toLowerCase() || query === user.lastName.toLowerCase()) {
-                    userFound.push(user);
-                    res.render('search', {users: userFound});
-                }
 
-                res.render("partials/notFound");
+        if(allUsers.length > 0) {
+            allUsers.some((user) => {
+                if(query == user.firstName.toLowerCase() || query == user.lastName.toLowerCase()) {
+                    userFound.push(user);
+                }
             })
         }
-        res.render("partials/notFound")
+
+        if(userFound.length > 0) {
+            console.log(true);
+            
+            res.render("search", {
+                users: userFound
+            })
+        } else {
+            res.render("partials/notFound");
+        }
     }
 ]
