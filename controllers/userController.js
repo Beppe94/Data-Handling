@@ -52,7 +52,7 @@ const validateCreateUser = [
 const validateSearchUser = [
     query("search").notEmpty().withMessage("Input is empty!")
         .exists().withMessage("Must fill the input!")
-        .isLength({min: 1}).withMessage("Input more characters")
+        .isAlpha().withMessage("Invalid input")
 ]
 
 export const usersCreatePost = [
@@ -102,21 +102,25 @@ export const searchUser = [
         const errors = validationResult(req)
 
         if(!errors.isEmpty()) {
-            return res.status(400).render("index", {
-                title: "User List",
-                users: allUsers,
-                errors: errors.array(),
-            });
-        } else if(allUsers) {
+            res.render("index", {
+                title: "Users List",
+                user: allUsers,
+                errors: errors.array()
+            })
+        }
+        
+        if(allUsers.length > 0) {
+            console.log(true);
+            
             allUsers.some((user) => {
-                if(!query || query.trim() === "+" || query.trim().length === 0) return;
                 if(query == user.firstName.toLowerCase() || query === user.lastName.toLowerCase()) {
                     userFound.push(user);
                     res.render('search', {users: userFound});
                 }
+
+                res.render("partials/notFound");
             })
-        } else {
-            res.render("partials/notFound");
         }
+        res.render("partials/notFound")
     }
 ]
