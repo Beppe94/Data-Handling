@@ -1,6 +1,6 @@
 # The Odin Project - Data Handling
 
->[!NOTE]
+>[!TIP]
 Practicing GET and POST requests in express. 
 Creating users to add in a local database and searching users in the database.
 Using express-validator to sanitize and check the inputs.
