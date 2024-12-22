@@ -111,7 +111,7 @@ export const searchUser = [
 
         if(allUsers.length > 0) {
             allUsers.some((user) => {
-                if(query == user.firstName.toLowerCase() || query == user.lastName.toLowerCase()) {
+                if(query.toLowerCase() == user.firstName.toLowerCase() || query.toLowerCase() == user.lastName.toLowerCase()) {
                     userFound.push(user);
                 }
             })
