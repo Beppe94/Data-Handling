@@ -9,7 +9,12 @@ import {
     searchUser
     } from "../controllers/userController.js"; 
 
-import { createUsernameGet, createUsernamePost, getUsernames } from "../controllers/newUserController.js";
+import {
+    createUsernameGet, 
+    createUsernamePost, 
+    getUsernames,
+    searchForUsername
+} from "../controllers/newUserController.js";
 
 const usersRouter = Router();
 
@@ -24,5 +29,6 @@ usersRouter.get("/search", searchUser);
 usersRouter.get("/usernames", getUsernames);
 usersRouter.get("/createUsername", createUsernameGet);
 usersRouter.post("/createUsername", createUsernamePost);
+usersRouter.get("/searchUsername", searchForUsername);
 
 export default usersRouter;

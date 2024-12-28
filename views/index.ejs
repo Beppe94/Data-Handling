@@ -10,7 +10,8 @@
     <div>
         <%-include("partials/errors.ejs")%>
         <form action="/search" method="GET" name="search">
-            <input type="search" name="search" id="search">
+            <label for="search">Search User</label>
+            <input type="search" name="search" id="search" placeholder="First or Second Name">
         </form>
     </div>
     <ul>
@@ -37,6 +38,11 @@
             <%})%> 
         <%}%>
     </ul>
-    <a href="/create">Create User</a>
+    <button>
+        <a href="/create">Create User</a>
+    </button>
+    <button>
+        <a href="/createUsername">Create username</a>
+    </button>
 </body>
 </html>

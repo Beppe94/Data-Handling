@@ -1,4 +1,4 @@
-import { getAllUsernames, insertUsername } from "../db/queries.js";
+import { getAllUsernames, insertUsername, searchUsername } from "../db/queries.js";
 
 export async function getUsernames(req, res) {
     const usernames = await getAllUsernames();
@@ -28,4 +28,21 @@ export async function createUsernamePost(req, res) {
         console.log(error);
         res.status(500).send("Internal Error")
     }
+}
+
+export async function searchForUsername(req, res) {
+    const query = req.query.searchUsername;
+    
+    const usersFound = await searchUsername(query);
+    console.log(usersFound);
+    
+    try {
+        res.render("usernamesFound", {
+            title: "Usernames Found",
+            usernames: usersFound
+        });
+    } catch (error) {
+        res.status(500).send(error);
+    }
+    
 }

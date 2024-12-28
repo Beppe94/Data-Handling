@@ -118,8 +118,6 @@ export const searchUser = [
         }
 
         if(userFound.length > 0) {
-            console.log(true);
-            
             res.render("search", {
                 users: userFound
             })

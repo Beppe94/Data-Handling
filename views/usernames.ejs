@@ -7,6 +7,12 @@
 </head>
 <body>
     <div>
+        <form action="/searchUsername" method="GET" name="searchUsername">
+            <label for="searchUsername">Search Username</label>
+            <input type="text" name="searchUsername" id="searchUsername">
+        </form>
+    </div>
+    <div>
         <%usernames.forEach((user) => {%>
             <p><%=user.username%></p>
         <%})%>
