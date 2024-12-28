@@ -7,4 +7,4 @@ Using express-validator to sanitize and check the inputs.
 
 >[!NOTE]
 >## Tech Stack
->Project built with Node, Express, Javascript, Ejs, Dotenv and Express-Validator
+>Project built with Node, Express, Javascript, Ejs, Dotenv, Express-Validator node-postgres and postgres database 
