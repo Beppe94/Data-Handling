@@ -6,8 +6,16 @@
     <title><%title%>></title>
 </head>
 <body>
-    <%usernames.forEach((user) => {%> 
-        <p><%=user.username%></p>
-    <%})%>
+    <div>
+        <%usernames.forEach((user) => {%> 
+            <p><%=user.username%></p>
+        <%})%>
+    </div>
+
+    <div>
+        <button>
+            <a href="/usernames">Usernames</a>
+        </button>
+    </div>
 </body>
 </html>

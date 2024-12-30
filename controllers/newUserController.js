@@ -2,11 +2,11 @@ import { getAllUsernames, insertUsername, searchUsername } from "../db/queries.j
 
 export async function getUsernames(req, res) {
     const usernames = await getAllUsernames();
-    console.log(usernames);
 
     res.render("usernames", {
         title: "Usernames",
-        usernames: usernames
+        usernames: usernames,
+        error: []
     })
 }
 
@@ -16,7 +16,6 @@ export async function createUsernameGet(req, res) {
 
 export async function createUsernamePost(req, res) {
     const { username } = req.body;
-    console.log(username);
 
     try {
         if(!username) {
@@ -26,23 +25,25 @@ export async function createUsernamePost(req, res) {
         res.redirect("/usernames");
     } catch (error) {
         console.log(error);
-        res.status(500).send("Internal Error")
+        res.status(500).send("Internal Error " + error)
     }
 }
 
 export async function searchForUsername(req, res) {
     const query = req.query.searchUsername;
-    
     const usersFound = await searchUsername(query);
-    console.log(usersFound);
+    const usernames = await getAllUsernames();
     
-    try {
+    if(usersFound.length > 0) {
         res.render("usernamesFound", {
             title: "Usernames Found",
-            usernames: usersFound
-        });
-    } catch (error) {
-        res.status(500).send(error);
+            usernames: usersFound,
+        })
+    } else {
+        res.render("usernames", {
+            title: "not found",
+            usernames: usernames,
+            error: usersFound.length > 0 ? null : ["Not Found"]
+        })
     }
-    
 }

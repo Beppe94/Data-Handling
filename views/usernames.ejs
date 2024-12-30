@@ -12,6 +12,11 @@
             <input type="text" name="searchUsername" id="searchUsername">
         </form>
     </div>
+    <%if(error) {%>
+        <%error.forEach((err) => {%>
+            <p style="color: red;"><%=err%></p>
+        <%})%>
+    <%}%>
     <div>
         <%usernames.forEach((user) => {%>
             <p><%=user.username%></p>
