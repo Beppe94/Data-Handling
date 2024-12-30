@@ -1,4 +1,4 @@
-import { getAllUsernames, insertUsername, searchUsername } from "../db/queries.js";
+import { getAllUsernames, insertUsername, searchUsername, removeAllUsernames } from "../db/queries.js";
 
 export async function getUsernames(req, res) {
     const usernames = await getAllUsernames();
@@ -46,4 +46,10 @@ export async function searchForUsername(req, res) {
             error: usersFound.length > 0 ? null : ["Not Found"]
         })
     }
+}
+
+export async function removeUsernames(req, res) {
+    await removeAllUsernames();
+
+    res.redirect("/usernames");
 }

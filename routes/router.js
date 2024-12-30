@@ -13,6 +13,7 @@ import {
     createUsernameGet, 
     createUsernamePost, 
     getUsernames,
+    removeUsernames,
     searchForUsername
 } from "../controllers/newUserController.js";
 
@@ -30,5 +31,6 @@ usersRouter.get("/usernames", getUsernames);
 usersRouter.get("/createUsername", createUsernameGet);
 usersRouter.post("/createUsername", createUsernamePost);
 usersRouter.get("/searchUsername", searchForUsername);
+usersRouter.get("/delete", removeUsernames);
 
 export default usersRouter;
